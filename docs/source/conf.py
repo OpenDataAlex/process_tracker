@@ -20,8 +20,8 @@
 project = 'Process Tracker'
 copyright = '2019, Alex Meadows'
 author = 'Alex Meadows'
-version = '0.1.6'
-release = '0.1.6 - beta'
+version = '0.2.0'
+release = '0.2.0 - beta'
 
 # -- General configuration ---------------------------------------------------
 

@@ -224,3 +224,15 @@ By Process
 ^^^^^^^^^^
 
 This method is explained over in :doc:`ExtractTracker </python/extract_tracker>`.
+
+Bulk Extract Update
+-------------------
+
+Extracts can also be processed in bulk.  If you use one of the lookup functions, it returns a list of extract file objects.
+Passing that list to the bulk_change_extract_status method will associate those extracts with the process and bulk update
+their status.::
+
+        process_run.bulk_change_extract_status(extracts=extract_list, extract_status="loading")
+
+Please note, that while going through the list if any of the extracts are interdependent of each other and the parent
+dependency has not been loaded, the process will currently fail to protect data continuity.

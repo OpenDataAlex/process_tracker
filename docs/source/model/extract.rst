@@ -3,6 +3,29 @@ Extract Tracker
 
 These are the tables associated with extract tracking/handling.  Links to other subjects will be provided as noted.
 
+
+.. _extract_dependency:
+
+Extract Dependency
+******************
+
+This table tracks the interdependencies between extract files.
+
+.. list-table:: extract_dependency
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - parent_extract_id
+     - Integer
+     - Foreign key to the :ref:`extract_tracking` table.  The parent extract of the relationship.
+   * - child_extract_id
+     - Integer
+     - Foreign key to the :ref:`extract_tracking` table.  The child extract of the relationship.
+
+
 .. _extract_process_tracking:
 
 Extract Process Tracking
@@ -30,6 +53,7 @@ This table tracks the association between extract files and process runs.
    * - extract_process_event_date_time
      - Datetime/timestamp
      - The date/time of the status change for the extract.
+
 
 .. _extract_status_lkup:
 
@@ -106,6 +130,24 @@ This table is the core of the extract tracking subsystem.
    * - extract_registration_date_time
      - Datetime/timestamp
      - The date/time that the extract was initially registered into the system.
+   * - extract_write_low_date_time
+     - Datetime/timestamp
+     - The earliest derived datetime for data processed in this extract at write.  Optional audit field.
+   * - extract_write_high_date_time
+     - Datetime/timestamp
+     - The latest derived datetime for data processed in this extract at write.  Optional audit field.
+   * - extract_write_record_count
+     - Integer
+     - For the given extract file at write, the total number of records processed.  Optional audit field.
+   * - extract_read_low_date_time
+     - Datetime/timestamp
+     - The earliest derived datetime for data processed in this extract at read.  Optional audit field.
+   * - extract_read_high_date_time
+     - Datetime/timestamp
+     - The latest derived datetime for data processed in this extract at read.  Optional audit field.
+   * - extract_read_record_count
+     - Integer
+     - For the given extract file at read, the total number of records processed.  Optional audit field.
 
 
 .. _location_lkup:
