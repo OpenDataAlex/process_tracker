@@ -31,6 +31,7 @@ Cluster
      - Integer
      - The maximum amount of processing allocated to the cluster.  Optional.
    * - cluster_max_processing_unit
+     - Integer
      - The unit of measure for the max processing field.  Examples include: Ghz, CPU, DPU.  Optional.
    * - cluster_current_memory_usage
      - Integer
