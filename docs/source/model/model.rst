@@ -9,6 +9,7 @@ This section provides details on the data store model for ProcessTracker.
    :maxdepth: 2
 
    Actor <actor>
+   Capacity <capacity>
    Error Tracker <error>
    Extract Tracker <extract>
    Process Tracker <process>

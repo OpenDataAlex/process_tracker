@@ -149,8 +149,9 @@ which is why the extract functionality is primarily tied to the ProcessTracker s
 Finding Extracts
 ----------------
 
-Extract files can be found in a few different ways.  The finders only return extract files in 'ready' state.  The finders
-also will only return extract files that have been registered in ProcessTracker.
+Extract files can be found in a few different ways.  Finders will return extracts in 'ready' state by default.  Other
+statuses can be searched for if required by adding the `status` variable.  The finders also will only return extract
+files that have been registered in ProcessTracker.
 
 By Filename
 ^^^^^^^^^^^
@@ -160,7 +161,7 @@ Full Filename
 
 So let's say that you know that there is a specific file that needs processing.  You can search for a specific file by::
 
-        process_run.find_ready_extracts_by_filename(filename='my_file.csv')
+        process_run.find_extracts_by_filename(filename='my_file.csv')
 
 This will return the ExtractTracking object, which includes the location of the file.
 
@@ -175,7 +176,7 @@ Let's say that you know that the files you are looking for match a specific patt
 
 Instead of looking for each file one at a time, you can use the partial filename:::
 
-        process_run.find_ready_extracts_by_filename(filename='my_file_')
+        process_run.find_extracts_by_filename(filename='my_file_')
 
 This will return the ExtractTracking object, which included the location of the file.  This function is greedy meaning
 it will return ANY files with 'my_file' in the filename.  For instance:::
@@ -189,7 +190,7 @@ By Location
 
 Locations are the filepaths where extract files are stored.  These can be local, a network drive, or a cloud directory.::
 
-        process_run.find_ready_extracts_by_location(location='My Location')
+        process_run.find_extracts_by_location(location='My Location')
 
 The location name is used and the ExtractTracking object(s) are returned.
 
@@ -199,10 +200,20 @@ By Process
 If the process has a parent process that creates files for it, or there is a process that produces files that will be
 used then the parent process' name can be used to find any ready extracts:::
 
-        process_run.find_ready_extracts_by_process(extract_process_name='My Super Cool Process')
+        process_run.find_extracts_by_process(extract_process_name='My Super Cool Process')
 
 This will find all extract files associated to that process that are in 'ready' state and return their ExtractTracking
 objects.
+
+Finding Extracts By Other Statuses
+----------------------------------
+
+All finder methods have a status variable with a default of 'ready'.  To search by another status type, just modify the
+variable:::
+
+        process_run.find_extracts_by_location(location='My Location', status='completed')
+
+The status type must exist in :ref:`extract_status_lkup`.
 
 Registering Extracts
 --------------------

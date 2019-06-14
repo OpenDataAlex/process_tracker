@@ -25,6 +25,8 @@ Lookup Objects
 The following lookup objects can be modified or created via the command line:
 
 * Actor
+* Cluster
+* Cluster Process
 * Error Type
 * Extract Status
 * Process Dependency
@@ -68,6 +70,35 @@ Shorthand can also be used:::
 
         processtracker delete -t Actor -n 'New Actor'
 
+Cluster Process
+---------------
+
+Cluster Process relationships can be added and removed via the CLI.  These are a bit more complicated to work with than the
+lookup objects.
+
+Create
+^^^^^^
+
+To create a new cluster process relationship, use the create command as noted above, but with other parameters.::
+
+        processtracker create --topic "cluster process" --cluster "My Cluster" --child "My Process Name"
+
+Shorthand can also be used.::
+
+        processtracker create -t "cluster process" --cluster "My Cluster" -c "My Process Name"
+
+Delete
+^^^^^^
+
+To delete a cluster process relationship, use the delete command as noted above, but with other parameters.::
+
+        processtracker delete --topic "cluster process" --cluster "My Cluster" --child "My Process Name"
+
+Shorthand can also be used.::
+
+        processtracker delete -t "cluster process" --cluster "My Cluster" -c "My Process Name"
+
+
 Process Dependency
 ------------------
 
@@ -88,7 +119,7 @@ Shorthand can also be used:::
 Delete
 ^^^^^^
 
-To delete a new process dependency, use the delete command as noted above, but with other parameters.::
+To delete a process dependency, use the delete command as noted above, but with other parameters.::
 
         processtracker delete --topic "process dependency" --parent "My Parent Process Name" --child "My Child Process Name"
 
