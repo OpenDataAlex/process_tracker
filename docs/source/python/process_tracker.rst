@@ -51,12 +51,20 @@ Those variables will be used to populate the data store backend as explained in 
      - :ref:`tool_lkup`
      - Yes
    * - sources
-     - Single or list of source names where data is read from
+     - Single or list of source names where data is read from.  Optional.
      - :ref:`source_lkup`
      - Yes
+   * - source_objects
+     - Dictionary of lists of source objects with source name as key where data is read from.  Optional.
+     - :ref:`source_object_lkup`, :ref:`process_source_object`
+     - Yes
    * - targets
-     - Single or list of target names (alias of source) where data is written to
+     - Single or list of target names (alias of source) where data is written to. Optional.
      - :ref:`source_lkup`
+     - Yes
+   * - target_objects
+     - Dictionary of lists of target source_objects with target name as key where data is read from.  Optional.
+     - :ref:`source_object_lkup`, :ref:`process_target_object`
      - Yes
 
 Once the instance has been instantiated, the rest of the options listed below become available.
@@ -138,6 +146,103 @@ value)
 
 It is recommended that the number of records be determined on a per extract file or a cumulative total before setting
 the record count.
+
+Tracking Process Sources
+************************
+
+Processes can have sources associated for auditing purposes.  There are two methods for tracking sources - source level
+and source object level.
+
+Source Level
+------------
+Source level tracking can be done by including a single source name or list of source names on process initialization.  For example:::
+
+                process_run = ProcessTracker(process_name='Lahman Teams Load'
+                                             , process_type='Stage Load'
+                                             , actor_name='New ProcessTracker User'
+                                             , tool_name='Spark'
+                                             , sources='Lahman Baseball Dataset')
+
+For multiple sources:::
+
+                process_run = ProcessTracker(process_name='Lahman Teams Load'
+                                             , process_type='Stage Load'
+                                             , actor_name='New ProcessTracker User'
+                                             , tool_name='Spark'
+                                             , sources={'Lahman Baseball Dataset', 'Another Baseball Dataset'})
+
+Source Object Level
+-------------------
+
+Source Object level tracking is done in a similar way as above.  Regardless of being a single source object, multiple
+source objects, or multiple sources with single or multiple objects, source object level tracking is done via a dictionary
+of lists.::
+
+                process_run = ProcessTracker(process_name='Lahman Teams Load'
+                                             , process_type='Stage Load'
+                                             , actor_name='New ProcessTracker User'
+                                             , tool_name='Spark'
+                                             , source_objects={"Lahman Baseball Dataset": ["Team.csv", "Player.csv"]}
+
+For multiple sources:::
+
+                process_run = ProcessTracker(process_name='Lahman Teams Load'
+                                             , process_type='Stage Load'
+                                             , actor_name='New ProcessTracker User'
+                                             , tool_name='Spark'
+                                             , source_objects={"Lahman Baseball Dataset": ["Team.csv", "Player.csv"]
+                                                               , "Another Baseball Dataset": ["Team", "Player"]}
+
+Note that sources is not set.  The sources variable will be ignored if source_objects is set.
+
+Tracking Process Targets
+************************
+
+
+Processes can have targets associated for auditing purposes.  There are two methods for tracking targets - target level
+and target object level.  Remember target is just an alias of source.  All targets and sources are stored in the :ref:`source_lkup` table.
+
+Target Level
+------------
+Target level tracking can be done by including a single target name or list of target names on process initialization.  For example:::
+
+                process_run = ProcessTracker(process_name='Lahman Teams Load'
+                                             , process_type='Stage Load'
+                                             , actor_name='New ProcessTracker User'
+                                             , tool_name='Spark'
+                                             , targets='My Baseball Datastore')
+
+For multiple targets:::
+
+                process_run = ProcessTracker(process_name='Lahman Teams Load'
+                                             , process_type='Stage Load'
+                                             , actor_name='New ProcessTracker User'
+                                             , tool_name='Spark'
+                                             , targets={'My Baseball Datastore', 'A Different Baseball Datastore'})
+
+Target Object Level
+-------------------
+
+Target Object level tracking is done in a similar way as above.  Regardless of being a single target object, multiple
+target objects, or multiple targets with single or multiple targets, target object level tracking is done via a dictionary
+of lists.::
+
+                process_run = ProcessTracker(process_name='Lahman Teams Load'
+                                             , process_type='Stage Load'
+                                             , actor_name='New ProcessTracker User'
+                                             , tool_name='Spark'
+                                             , target_objects={"My Baseball Datastore": ["team", "player"]}
+
+For multiple targets:::
+
+                process_run = ProcessTracker(process_name='Lahman Teams Load'
+                                             , process_type='Stage Load'
+                                             , actor_name='New ProcessTracker User'
+                                             , tool_name='Spark'
+                                             , target_objects={"My Baseball Datastore": ["team", "player"]
+                                                               , "A Different Baseball Datastore": ["Team", "Player"]}
+
+Note that targets is not set.  The targets variable will be ignored if target_objects is set.
 
 Process Extracts
 ****************

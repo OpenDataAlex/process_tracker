@@ -80,7 +80,30 @@ This table tracks what sources are used by a given process.
      - The source system utilized by the process.  Foreign key to :ref:`source_lkup`.
    * - process_id
      - Integer
-     - the process utilizing the source.  Foreign key to :ref:`process`.
+     - The process utilizing the source.  Foreign key to :ref:`process`.
+
+
+.. _process_source_object:
+
+Process Source Object
+*********************
+
+This table tracks the finer grained relationship between process and source object.
+
+
+.. list-table:: process_source_object
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - process_id
+     - Integer
+     - The process utilizing the source object.  Foreign key to :ref:`process`.
+   * - source_object_id
+     - Integer
+     - The source object being utilized by the process.  Foreign key to :ref:`source_object_lkup`.
 
 .. _process_status_lkup:
 
@@ -141,6 +164,29 @@ vice-versa.
    * - process_id
      - Integer
      - the process utilizing the source.  Foreign key to :ref:`process`.
+
+
+.. _process_target_object:
+
+Process Target Object
+*********************
+
+This table tracks the finer grained relationship between process and source target object.
+
+
+.. list-table:: process_target_object
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - process_id
+     - Integer
+     - The process utilizing the source object.  Foreign key to :ref:`process`.
+   * - target_object_id
+     - Integer
+     - The target object being utilized by the process.  Foreign key to :ref:`source_object_lkup`.
 
 
 .. _process_tracking:
