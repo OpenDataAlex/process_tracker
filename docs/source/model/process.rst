@@ -37,6 +37,28 @@ This table tracks the unique processes being tracked by ProcessTracker.
      - The date/time of the last failed run of this process.
 
 
+.. _process_dataset_type:
+
+Process Dataset Type
+********************
+
+This table tracks the relationship between process and dataset types.
+
+.. list-table:: process_dataset_type
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - process_id
+     - Integer
+     - Foreign key to the :ref:`process` table.
+   * - dataset_type_id
+     - Integer
+     - Foreign key to the :ref:`dataset_type_lkup` table.
+
+
 .. _process_dependency:
 
 Process Dependency

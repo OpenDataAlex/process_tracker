@@ -11,6 +11,8 @@ setting up the data store will be enabled in the code implementations of Process
 prepared scripts for four of the more popular relational databases (Postgres, MySQL, MS-SQL, Oracle) that can be found
 here <add doc link>.
 
+.. _configuration:
+
 Configuration
 *************
 
@@ -19,11 +21,12 @@ found in the user's home directory under .process_tracker once the module has be
 implementations, configuration will be handled in the best practice of the tool (i.e. the tool's configuration files,
 shared modules, etc.)
 
-process_tracker.ini
-===================
-The process_tracker.ini file contains the following settings:
+process_tracker_config.ini
+==========================
 
-.. list-table:: process_tracker.ini
+The process_tracker_config.ini file contains the following settings:
+
+.. list-table:: process_tracker_config.ini
    :widths: 25 25
    :header-rows: 1
 
@@ -31,6 +34,8 @@ The process_tracker.ini file contains the following settings:
      - Variable Description
    * - log_level
      - Logging level of ProcessTracker
+   * - max_concurrent_failures
+     - Maximum number of concurrent failures allowed before process is put in status 'on hold'
    * - data_store_type
      - The database type.  Valid options:  postgresql, mysql, mssql, oracle, snowflake
    * - data_store_username
@@ -45,3 +50,10 @@ The process_tracker.ini file contains the following settings:
      - The name of the database/schema storing ProcessTracking data in the data store
 
 The data_store_* variables are used to build a connection string to the data store.
+
+Encrypting Data Store Passwords
+===============================
+
+Data store passwords can be encrypted so that they are not stored in plain text. The method used is NOT cryptographically
+secure.  This just makes it a bit harder for someone to access your data store password.  Please refer to the
+:ref:`password_encryption` section.

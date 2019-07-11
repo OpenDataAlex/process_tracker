@@ -126,3 +126,21 @@ To delete a process dependency, use the delete command as noted above, but with 
 Shorthand can also be used:::
 
         processtracker delete -t "process dependency" -p "My Parent Process Name" -c "My Child Process Name"
+
+.. _password_encryption:
+
+Password Encryption
+*******************
+
+Data store passwords can be encrypted using the CLI tool.  This encryption is NOT cryptographically secure!  This method
+is just so plain text passwords are not stored in the configuration file.::
+
+        processtracker encrypt --password "MySecretPassword"
+
+This will return back the encrypted cypher:::
+
+        Encrypted password is now:  Encrypted wqfCvsKKwpzCrsOYw4rCvsKBwrHCrMOawr_DlcOZwro=
+        When storing in your config file, please be sure to include 'Encrypted ' as well as the hash.
+
+As the message states, take the password, starting with the 'Encrypted ' and paste it into your config file.  Again, this
+is not cryptographically secure.  This only helps obscure your password.

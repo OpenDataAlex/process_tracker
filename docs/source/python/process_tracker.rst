@@ -66,6 +66,15 @@ Those variables will be used to populate the data store backend as explained in 
      - Dictionary of lists of target source_objects with target name as key where data is read from.  Optional.
      - :ref:`source_object_lkup`, :ref:`process_target_object`
      - Yes
+   * - config_location
+     - Location where Process Tracker configuration file can be found.  If not set will use the system home directory
+       and check under .process_tracker for the process_tracker_config.ini file. Optional.
+     - :ref:`configuration`
+   * - dataset_types
+     - Single or list of dataset category types.  Will be associated with the process as well as any extracts,
+       sources/targets, and source/target objects that are associated with the process.
+     - :ref:`dataset_type_lkup`, :ref:`extract_dataset_type`, :ref:`process_dataset_type`, :ref:`source_dataset_type`
+       , :ref:`source_object_dataset_type`
 
 Once the instance has been instantiated, the rest of the options listed below become available.
 
@@ -85,6 +94,12 @@ change_run_status command.  For instance::
 
         process_run.change_run_status('my custom status')
 
+On Hold Processes
+-----------------
+
+Processes that are in the 'on hold' status are in that status because the max_concurrent_failures setting was reached.
+Currently, the only way to move a process out of 'on hold' is to manually change the last process run to 'completed' or
+some other status than 'running' or 'failed'.
 
 Triggering Errors
 *****************
@@ -146,6 +161,13 @@ value)
 
 It is recommended that the number of records be determined on a per extract file or a cumulative total before setting
 the record count.
+
+Dataset Types
+*************
+
+Dataset types are high level categories for the type(s) of data the process and ancilliary objects like extracts,
+sources/targets, source objects/target objects, etc. can be associated to.  Once the variable dataset_types is set there
+is nothing else required to associate the process and other entities associated to the process to the dataset type(s).
 
 Tracking Process Sources
 ************************

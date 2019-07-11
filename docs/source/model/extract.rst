@@ -4,6 +4,28 @@ Extract Tracker
 These are the tables associated with extract tracking/handling.  Links to other subjects will be provided as noted.
 
 
+.. _extract_dataset_type:
+
+Extract Dataset Type
+********************
+
+This table tracks the relationship between extract files and dataset types.
+
+.. list-table:: extract_dataset_type
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - extract_id
+     - Integer
+     - Foreign key to the :ref:`extract_tracking` table.
+   * - dataset_type_id
+     - Integer
+     - Foreign key to the :ref:`dataset_type_lkup` table.
+
+
 .. _extract_dependency:
 
 Extract Dependency
@@ -176,6 +198,9 @@ This table tracks extract file locations.
    * - location_type_id
      - Integer
      - The type of location for given filepath.  Foreign key to :ref:`location_type_lkup`.
+   * - location_file_count
+     - The number of files currently in the given location.
+     - Integer
 
 .. _location_type_lkup:
 

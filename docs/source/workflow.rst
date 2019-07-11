@@ -40,6 +40,21 @@ These entities are described in more detail in the :doc:`Model <./model/model>` 
 
 Once the process run is registered, it must be determined with extract file(s) are required for further processing.
 
+Previous run 'on hold'?
+=======================
+
+If the process has failed enough times, then the process should no longer try to process regardless of how many times
+it has triggered.  This status is termed 'on hold'.  If the previous run of a process has hit the max_concurrent_failures
+setting value, then the run will be placed on hold.  The process will remain in that status until manually switched over
+to 'completed' or another status that is not 'running' or 'failed'.
+
+Max concurrent failures reached?
+================================
+
+If the previous run is not in the 'on hold' status, then a number of previous process runs matching the
+max_concurrent_failures will be checked.  If those runs are all failures (matching the max_concurrent_failures value)
+the current run will be placed 'on hold' until the failure is resolved.  Otherwise the process run will proceed as normal.
+
 Extract(s) required?
 ====================
 
