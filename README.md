@@ -15,7 +15,7 @@ Found a bug?  Please go to the specific implementation project and add the issue
 * [Python][3]
 * [Kettle (aka PDI/Pentaho Data Integration)][4]
 
-[1]: https://process-tracker.readthedocs.io/
+[1]: https://process-tracker.readthedocs.io/en/latest/
 [2]: https://github.com/OpenDataAlex/process_tracker/issues
 [3]: https://github.com/OpenDataAlex/process_tracker_python/issues
 [4]: https://github.com/OpenDataAlex/process_tracker_kettle/issues
