@@ -374,3 +374,27 @@ their status.::
 
 Please note, that while going through the list if any of the extracts are interdependent of each other and the parent
 dependency has not been loaded, the process will currently fail to protect data continuity.
+
+Process Helpers
+***************
+
+There are several helpers for ProcessTracker objects to assist in working with other components associated with the
+ProcessTracker instance.  Those objects are:
+
+* actor
+* process_type
+* process
+* sources
+* targets
+* tool
+
+To use attributes of the objects, call the attribute like so:::
+
+        process_run = ProcessTracker(process_name='Lahman Teams Load'
+                                             , process_type='Stage Load'
+                                             , actor_name='New ProcessTracker User'
+                                             , tool_name='Spark'
+                                             , sources='Lahman Baseball Dataset')
+
+        process_run.actor.actor_name # To get the actor_name attribute of actor object associated with process_run.
+

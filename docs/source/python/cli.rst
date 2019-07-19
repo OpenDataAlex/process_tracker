@@ -144,3 +144,13 @@ This will return back the encrypted cypher:::
 
 As the message states, take the password, starting with the 'Encrypted ' and paste it into your config file.  Again, this
 is not cryptographically secure.  This only helps obscure your password.
+
+Move Process Run From 'On Hold' Status
+**************************************
+
+Process runs that are in 'on hold' status can now be updated to 'completed' thru the CLI tool.  To update a process run
+that is in 'on hold', run the command:::
+
+        processtracker update -t "process run" -n "My Process Name"
+
+Note that process runs can only have their status updated.  They can not be created, deleted, or updated otherwise.

@@ -65,3 +65,24 @@ As extract files are used within a process run, their status will need to be mod
 
 Custom extract status can be entered, but the default status types must be used for ProcessTracker to know what to do
 with files.  As long as the file's status is eventually changed to one of those then the process flow will continue.
+
+Extract Helpers
+***************
+
+There are also a few helpers available to ExtractTracker objects to assist in using extracts:
+
+Location
+--------
+
+The extract's location object can be retrieved by using:::
+
+        extract = ExtractTracker(process_run=process_run
+                                      , filename='Teams.csv'
+                                      , location_name='Lahman Baseball Databank 2018'
+                                      , location_path='~/baseballdatabank-master_2018-03-28/baseballdatabank-master/core/')
+
+        extract.location # This is the location object associated to the extract.
+
+Attributes of the location can be called by using the attribute's name:::
+
+        extract.location.location_bucket_name # To retrieve the location's bucket (if s3 location)
