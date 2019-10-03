@@ -54,6 +54,12 @@ Those variables will be used to populate the data store backend as explained in 
      - The extract file status.  Optional.
      - :ref:`extract_status_lkup`
      - Yes
+   * - filetype
+     - The name of the extract's filetype.
+     - :ref:`extract_filetype_lkup`
+   * - compression_type
+     - The type of compression used on the extract.  Optional.
+     - :ref:`extract_compression_type_lkup`
 
 
 Changing Extract Status

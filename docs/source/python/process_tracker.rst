@@ -58,6 +58,10 @@ Those variables will be used to populate the data store backend as explained in 
      - Dictionary of lists of source objects with source name as key where data is read from.  Optional.
      - :ref:`source_object_lkup`, :ref:`process_source_object`
      - Yes
+   * - source_object_attributes
+     - Dictionary of lists of source object attributes with source and source object names as keys where data is read from. Optional.
+     - :ref:`source_object_attribute`
+     - Yes
    * - targets
      - Single or list of target names (alias of source) where data is written to. Optional.
      - :ref:`source_lkup`
@@ -66,15 +70,25 @@ Those variables will be used to populate the data store backend as explained in 
      - Dictionary of lists of target source_objects with target name as key where data is read from.  Optional.
      - :ref:`source_object_lkup`, :ref:`process_target_object`
      - Yes
+   * - target_object_attributes
+     - Dictionary of lists of target object attributes with target and target object names as keys where data is read from. Optional.
+     - :ref:`source_object_attribute`
+     - Yes
    * - config_location
      - Location where Process Tracker configuration file can be found.  If not set will use the system home directory
        and check under .process_tracker for the process_tracker_config.ini file. Optional.
      - :ref:`configuration`
+     - N/A
    * - dataset_types
      - Single or list of dataset category types.  Will be associated with the process as well as any extracts,
        sources/targets, and source/target objects that are associated with the process.
      - :ref:`dataset_type_lkup`, :ref:`extract_dataset_type`, :ref:`process_dataset_type`, :ref:`source_dataset_type`
        , :ref:`source_object_dataset_type`
+     - No
+   * - schedule_frequency
+     - The general frequency at which the process should run.
+     - :ref:`schedule_frequency_lkup`
+     - No
 
 Once the instance has been instantiated, the rest of the options listed below become available.
 
@@ -398,3 +412,47 @@ To use attributes of the objects, call the attribute like so:::
 
         process_run.actor.actor_name # To get the actor_name attribute of actor object associated with process_run.
 
+
+Finding Process Contacts
+************************
+
+To find a process' contacts as well as that process' source contacts, there is a lookup function that will return the
+name and email of the contact as well as if the contact is for the process itself or that process' source.::
+
+        process_run.find_process_contacts(process_id)
+
+
+Finding Process Source Attributes
+*********************************
+
+Processes usually have sources that they work with to pull data out into either extracts or for further processing.  To
+find the source attributes that a process will use there is a helper function.::
+
+        process_run.find_process_source_attributes(process_id)
+
+This will return the source name, source object name, and source object attribute name of each attribute registered.
+
+Please note, if the attributes are not registered either during the initialization of the process or thru direct interaction
+of the data store, no data will be returned.
+
+Finding Process Target Attributes
+*********************************
+
+Processes usually have targets that they work with to push data into or for further processing.  To find the target
+attributes that a process will use there is a helper function.::
+
+        process_run.find_process_target_attributes(process_id)
+
+This will return the target name, target object name, and target object attribute of each attribute registered.
+
+Please note, if the attributes are not registered either during hte initialization of the process or thru direct interaction
+of the data store, no data will be returned.
+
+Finding Processes By Schedule Frequency
+***************************************
+
+Processes can have an optional schedule frequency.  To find all processes of a given frequency there is a helper function.::
+
+        process_run.find_process_by_schedule_frequency(frequency="hourly")
+
+This will return a list of process ids with the given frequency.

@@ -35,6 +35,31 @@ This table tracks the unique processes being tracked by ProcessTracker.
    * - last_failed_run_date_time
      - Datetime/timestamp
      - The date/time of the last failed run of this process.
+   * - schedule_frequency_id
+     - Integer
+     - The schedule frequency of the process.  Foreign key to :ref:`schedule_frequency_lkup`
+
+
+.. _process_contact:
+
+Process Contact
+***************
+
+This table tracks the relationship between processes and their contacts.
+
+.. list-table:: process_contact
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - process_id
+     - Integer
+     - The contact's process.  Foreign key to :ref:`process`.
+   * - contact_id
+     - Integer
+     - The process' contact.  Foreign key to :ref:`contact`.
 
 
 .. _process_dataset_type:
@@ -83,6 +108,40 @@ This table tracks the interdependencies between processes, regardless of tool/me
 Please note - the dependency hierarchy can theoretically go on infinitely.  In reality only a few levels either way
 would realistically be used, but this type of relationship can cause performance issues.
 
+
+.. _process_filter:
+
+Process Filter
+**************
+
+This table tracks query filters for a given process.
+
+.. list-table:: process_filter
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - process_filter_id
+     - Integer
+     - Auto incrementing unique sequence
+   * - process_id
+     - Integer
+     - The filter's process.  Foreign key to :ref:`process`.
+   * - source_object_attribute_id
+     - Integer
+     - The process filter's source_object attribute.  Foreign key to :ref:`source_object_attribute`.
+   * - filter_type_id
+     - Integer
+     - The filter's type.  Foreign key to :ref:`filter_type_lkup`
+   * - filter_value_string
+     - String(250)
+     - For character based attributes, the string comparator.
+   * - filter_value_numeric
+     - Numeric
+     - For numeric based attributes, the numeric comparator.
+
 .. _process_source:
 
 Process Source
@@ -126,6 +185,36 @@ This table tracks the finer grained relationship between process and source obje
    * - source_object_id
      - Integer
      - The source object being utilized by the process.  Foreign key to :ref:`source_object_lkup`.
+
+
+.. _process_source_object_attribute:
+
+Process Source Object Attribute
+*******************************
+
+This table tracks even finer grained relationships between process and source object attributes.
+
+
+.. list-table:: process_source_object_attribute
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - process_id
+     - Integer
+     - The Process associated to the source object attribute.  Foreign key to :ref:`process`.
+   * - source_object_attribute_id
+     - Integer
+     - The Source Object Attribute associated to the process.  Foreign key to :ref:`source_object_attribute`.
+   * - source_object_attribute_alias
+     - String(250)
+     - The optional alias used by the process on the attribute.
+   * - source_object_attribute_expression
+     - String(250)
+     - The optional expression (calculation) used on the attribute.
+
 
 .. _process_status_lkup:
 
@@ -209,6 +298,35 @@ This table tracks the finer grained relationship between process and source targ
    * - target_object_id
      - Integer
      - The target object being utilized by the process.  Foreign key to :ref:`source_object_lkup`.
+
+
+.. _process_target_object_attribute:
+
+Process Target Object Attribute
+*******************************
+
+This table tracks even finer grained relationships between process and target source object attributes.
+
+
+.. list-table:: process_target_object_attributes
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - process_id
+     - Integer
+     - The Process associated to the target source object attribute.  Foreign key to :ref:`process`.
+   * - target_object_attribute_id
+     - Integer
+     - The Target Source Object Attribute associated to the process.  Foreign key to :ref:`source_object_attribute`.
+   * - target_object_attribute_alias
+     - String(250)
+     - The optional alias used by the process on the attribute.
+   * - target_object_attribute_expression
+     - String(250)
+     - The optional expression (calculation) used on the attribute.
 
 
 .. _process_tracking:

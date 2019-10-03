@@ -3,6 +3,37 @@ Extract Tracker
 
 These are the tables associated with extract tracking/handling.  Links to other subjects will be provided as noted.
 
+.. _extract_compression_type_lkup:
+
+Extract Compression Type
+************************
+
+This table tracks the valid compression types available.
+
+.. list-table:: extract_compression_type_lkup
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - extract_compression_type_id
+     - Integer
+     - Auto incrementing integer sequence
+   * - extract_compression_type
+     - Unique compression type name
+
+Some default extract compression types are provided on initialization.
+
+.. list-table:: Default Extract Compression Types
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Extract Compression Type
+     - Description
+   * - zip
+     - Zip Compression
+
 
 .. _extract_dataset_type:
 
@@ -46,6 +77,52 @@ This table tracks the interdependencies between extract files.
    * - child_extract_id
      - Integer
      - Foreign key to the :ref:`extract_tracking` table.  The child extract of the relationship.
+
+
+
+.. _extract_filetype_lkup:
+
+Extract File Type
+*****************
+
+This table tracks the valid types of files and their formats that available.
+
+.. list-table:: extract_filetype_lkup
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - extract_filetype_id
+     - Integer
+     - Auto incrementing unique sequence
+   * - extract_filetype_code
+     - String(5)
+     - The file extension used by the filetype (i.e. csv)
+   * - extract_filetype
+     - String(75)
+     - The unique name of the filetype.
+   * - delimiter_char
+     - String(1)
+     - For filetypes like csv, the character used to delimit fields.
+   * - quote_char
+     - String(1)
+     - For filetypes like csv, the character used to quote fields.
+   * - escape_char
+     - String(1)
+     - For filetypes like csv, the character used to escape fields.
+
+Some default extract file types are provided on initialization.
+
+.. list-table:: Default Extract File Types
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Extract File Type
+     - Description
+   * - csv
+     - Comma Separated Values
 
 
 .. _extract_process_tracking:
@@ -170,6 +247,12 @@ This table is the core of the extract tracking subsystem.
    * - extract_read_record_count
      - Integer
      - For the given extract file at read, the total number of records processed.  Optional audit field.
+   * - extract_compression_type_id
+     - Integer
+     - Optional compression type used on the extract. Foreign key to :ref:`extract_compression_type_lkup`
+   * - extract_filetype_id
+     - Integer
+     - File type/format used by the extract.  Foreign key to :ref:`extract_filetype_lkup`
 
 
 .. _location_lkup:
