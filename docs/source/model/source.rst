@@ -76,7 +76,7 @@ This table tracks the unique filter types used by processes.
 Some default filter types are provided on initialization.
 
 .. list-table:: Default Filter Types
-   :widths: 25 50
+   :widths: 25 50 50
    :header-rows: 1
 
    * - Filter Type Code
@@ -192,6 +192,7 @@ This is the core table tracking source/target objects.
      - Auto incrementing integer sequence
      - System key for the source object
    * - source_id
+     - Integer
      - Foreign key to :ref:`source_lkup`.
    * - source_object_name
      - String(250)
@@ -225,6 +226,7 @@ This is the core table tracking source/target object attributes.
      - String(750)
      - For attributes from sources like json, the path to get to the attribute.
    * - data_type_id
+     - Integer
      - The data type of the attribute.  Foreign key to :ref:`data_type_lkup`
    * - data_length
      - Integer

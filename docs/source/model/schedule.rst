@@ -33,6 +33,7 @@ Some default schedule frequencies are provided on initialization.
    * - Schedule Frequency
      - Description
    * - unscheduled
+     - Processes are not run on any schedule.
    * - hourly
      - Processes should run on an hourly basis.
    * - daily

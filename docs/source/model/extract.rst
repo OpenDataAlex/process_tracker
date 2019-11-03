@@ -21,6 +21,7 @@ This table tracks the valid compression types available.
      - Integer
      - Auto incrementing integer sequence
    * - extract_compression_type
+     - Integer
      - Unique compression type name
 
 Some default extract compression types are provided on initialization.
