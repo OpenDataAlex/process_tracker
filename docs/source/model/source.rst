@@ -4,6 +4,28 @@ Source
 Sources are data stores that can either be the source of data to be processed or targets for processes to write data to.
 
 
+.. _character_set_lkup:
+
+Character Set
+*************
+
+This table tracks the character set used by data
+
+.. list-table:: character_set_lkup
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - character_set_id
+     - Integer
+     - Primary key
+   * - character_set_name
+     - String(75)
+     - ~Unique name of the given character set
+
+
 .. _data_type_lkup:
 
 Data Type
@@ -113,7 +135,8 @@ Some default filter types are provided on initialization.
 Source
 ******
 
-This is the core table tracking sources/targets.
+This is the core table tracking sources/targets.  Note that one data flow's source is
+likely another data flow's target.  They are all stored here.
 
 .. list-table:: source_lkup
    :widths: 25 25 50
@@ -128,6 +151,12 @@ This is the core table tracking sources/targets.
    * - source_name
      - String(250)
      - Unique name of the given source.
+   * - character_set_id
+     - Integer
+     - The source's character set.  Foreign key to :ref:`character_set_lkup`
+   * - source_type_id
+     - Integer
+     - The source's type. Foreign key to :ref:`source_type_lkup`.
 
 
 .. _source_contact:
@@ -174,6 +203,28 @@ This table tracks the relationship between sources and dataset types.
      - Foreign key to the :ref:`dataset_type_lkup` table
 
 
+.. _source_location:
+
+Source Location
+***************
+
+This table tracks relationships between sources and the location(s) where their data is stored.
+
+.. list-table:: source_location
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - source_id
+     - Integer
+     - Foreign key to the :ref:`source_lkup` table
+   * - location_id
+     - Integer
+     - Foreign key to the :ref:`location_lkup` table
+
+
 .. _source_object_lkup:
 
 Source Object
@@ -199,14 +250,14 @@ This is the core table tracking source/target objects.
      - Unique object name from given source.
 
 
-.. _source_object_attribute:
+.. _source_object_attribute_lkup:
 
 Source Object Attribute
 ***********************
 
 This is the core table tracking source/target object attributes.
 
-.. list-table:: source_object_attribute
+.. list-table:: source_object_attribute_lkup
    :widths: 25 25 50
    :header-rows: 1
 
@@ -243,6 +294,15 @@ This is the core table tracking source/target object attributes.
    * - default_value_number
      - Numeric
      - For numeric based attributes, the default value.
+   * - is_key
+     - Boolean
+     - Is this attribute part of the key for the object?
+   * - is_filter
+     - Boolean
+     - Is this attribute part of the set used to determine if changes have occurred?
+   * - is_partition
+     - Boolean
+     - Is this attribute used to partition the data set?
 
 
 .. _source_object_dataset_type:
@@ -265,3 +325,68 @@ This table tracks the relationship between source/target objects and dataset typ
    * - dataset_type_id
      - Integer
      - Foreign key to the :ref:`dataset_type_lkup` table
+
+
+.. _source_object_location:
+
+Source Object Location
+**********************
+
+This table tracks relationships between source objects and the location(s) where their data is stored.
+
+.. list-table:: source_object_location
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - source_object_id
+     - Integer
+     - Foreign key to the :ref:`source_object_lkup` table
+   * - location_id
+     - Integer
+     - Foreign key to the :ref:`location_lkup` table
+
+.. _source_type_lkup:
+
+Source Type
+***********
+
+This table provides unique source types to classify sources.
+
+.. list-table:: source_type_lkup
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - source_type_id
+     - Integer
+     - Primary key
+   * - source_type_name
+     - String(75)
+     - Unique source type for classification of sources
+
+The following defaults are provided on initialization.
+
+.. list-table:: system_lkup defaults
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - System Key
+     - System Value
+     - Description
+   * - 1
+     - Undefined
+     - The source does not have a source type defined
+   * - 2
+     - Database
+     - The source is a relational database
+   * - 3
+     - Internal
+     - The source is internal to your company
+   * - 4
+     - External
+     - The source is external to your company

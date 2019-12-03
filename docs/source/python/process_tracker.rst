@@ -38,6 +38,10 @@ Those variables will be used to populate the data store backend as explained in 
      - The name of the process being run.  Must be unique.
      - :ref:`process`
      - Yes
+   * - process_run_name
+     - An optional unique name given to an individual process run
+     - :ref:`process_tracking`
+     - Yes
    * - process_type
      - The type of process being run.
      - :ref:`process_type_lkup`
@@ -89,8 +93,24 @@ Those variables will be used to populate the data store backend as explained in 
      - The general frequency at which the process should run.
      - :ref:`schedule_frequency_lkup`
      - No
+   * - process_run_id
+     - When recreating a Process Tracking instance, provide the process_tracking_id and it will re-instantiate as it was
+       originally created, with the current status, objects, etc.
+     - :ref:`process_tracking`, plus all other objects created on instantiation of ProcessTracker
+     - No
 
 Once the instance has been instantiated, the rest of the options listed below become available.
+
+Re-initializing An Instance
+***************************
+
+To set up a previous instance, pass the process tracking id to ProcessTracker.  Instead of creating a new instance of
+the given process, it will retrieve the specific tracking record and all of it's ancillary data.::
+
+        restored_process_run = ProcessTracker(process_run_id=123)
+
+This should ideally only be used when a process is still running - like when switching between services within your
+cloud provider.
 
 Change Process Run Status
 *************************
@@ -430,7 +450,29 @@ find the source attributes that a process will use there is a helper function.::
 
         process_run.find_process_source_attributes(process_id)
 
-This will return the source name, source object name, and source object attribute name of each attribute registered.
+This will return a list with the following:
+
+.. list-table:: process_source_attributes returned
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Attribute Name
+     - Attribute Description
+   * - source_name
+     - The name of the source system
+   * - source_type
+     - The type of the source system
+   * - source_object_name
+     - The object (i.e. table or dataset) name from the source system
+   * - source_object_attribute_name
+     - The attribute (i.e. column) name from the source object
+   * - is_key
+     - Is the attribute part of the source object's key?
+   * - is_filter
+     - Is the attribute used for record version comparison?
+   * - is_partition
+     - Is the attribute used for the partitioning of the data set (i.e. if the filetype is Parquet is the attribute used
+       for the file partition)?
 
 Please note, if the attributes are not registered either during the initialization of the process or thru direct interaction
 of the data store, no data will be returned.
@@ -443,8 +485,29 @@ attributes that a process will use there is a helper function.::
 
         process_run.find_process_target_attributes(process_id)
 
-This will return the target name, target object name, and target object attribute of each attribute registered.
+This will return a list with the following:
 
+.. list-table:: process_target_attributes returned
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Attribute Name
+     - Attribute Description
+   * - target_name
+     - The name of the target source system
+   * - target_type
+     - The type of the target source system
+   * - target_object_name
+     - The object (i.e. table or dataset) name from the target source system
+   * - target_object_attribute_name
+     - The attribute (i.e. column) name from the target source object
+   * - is_key
+     - Is the attribute part of the source object's key?
+   * - is_filter
+     - Is the attribute used for record version comparison?
+   * - is_partition
+     - Is the attribute used for the partitioning of the data set (i.e. if the filetype is Parquet is the attribute used
+       for the file partition)?
 Please note, if the attributes are not registered either during hte initialization of the process or thru direct interaction
 of the data store, no data will be returned.
 
@@ -456,3 +519,32 @@ Processes can have an optional schedule frequency.  To find all processes of a g
         process_run.find_process_by_schedule_frequency(frequency="hourly")
 
 This will return a list of process ids with the given frequency.
+
+Finding Process Filters
+***********************
+
+Processes will be querying data from given sources.  The source data will likely be filtered on specific criteria.  To
+retrieve the process' filters, use the find_process_filters method.::
+
+        process_run.find_process_filters(process=process_id)
+
+This will return a list of attributes and their requisite filters.
+
+.. list-table:: filter attributes provided
+   :widths: 25 50
+   :header-rows: 1
+
+   * - Attribute name
+     - Attribute description
+   * - source_name
+     - The name of the source system
+   * - source_object_name
+     - The name of the object (i.e. table or data set) within/from the source system
+   * - source_object_attribute_name
+     - The attribute (i.e. column) name from the object in within/from the source system
+   * - filter_type_code
+     - Based on the defaults in :ref:`filter_type_lkup`, the type of filter being applied to the source object attribute
+   * - filter_value_numeric
+     - The value being filtered by, provided the attribute is numeric.
+   * - filter_value_string
+     - The value being filtered by, provided the attribute is string.

@@ -8,7 +8,7 @@ Capacity Management involves organization of environment resources and assigning
 Cluster
 *******
 
-.. list-table:: cluster_tracking
+.. list-table:: cluster_tracking_lkup
    :widths: 25 25 50
    :header-rows: 1
 
@@ -56,7 +56,7 @@ This table tracks the relationships between clusters and processes.  Used for pe
      - Column Description
    * - cluster_id
      - Integer
-     - The cluster of the cluster-process relationship.  Foreign key to :ref:`cluster_tracking`.
+     - The cluster of the cluster-process relationship.  Foreign key to :ref:`cluster_tracking_lkup`.
    * - process_id
      - Integer
      - The process of the cluster-process relationship.  Foreign key to :ref:`process`.

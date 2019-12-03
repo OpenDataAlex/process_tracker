@@ -155,6 +155,50 @@ This table tracks the association between extract files and process runs.
      - The date/time of the status change for the extract.
 
 
+.. _extract_source:
+
+Extract Source
+**************
+
+This table tracks the relationship between extracts and their sources.
+
+.. list-table:: extract_source
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - extract_id
+     - Integer
+     - Foreign key to :ref:`extract_tracking`
+   * - source_id
+     - Integer
+     - Foreign key to :ref:`source_lkup`
+
+
+.. _extract_source_object:
+
+Extract Source Object
+*********************
+
+This table tracks the relationship between extracts and their source objects.
+
+.. list-table:: extract_source_object
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - extract_id
+     - Integer
+     - Foreign key to :ref:`extract_tracking`
+   * - source_id
+     - Integer
+     - Foreign key to :ref:`source_object_lkup`
+
+
 .. _extract_status_lkup:
 
 Extract Status
@@ -254,6 +298,59 @@ This table is the core of the extract tracking subsystem.
    * - extract_filetype_id
      - Integer
      - File type/format used by the extract.  Foreign key to :ref:`extract_filetype_lkup`
+   * - extract_filesize
+     - Numeric
+     - The size of the extract
+   * - extract_filesize_type_id
+     - Integer
+     - The measure of the extract filesize.  Foreign key to :ref:`filesize_type_lkup`
+
+
+.. _filesize_type_lkup:
+
+File size Type
+**************
+
+This table provides file sizes for extracts.
+
+.. list-table:: filesize_type_lkup
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Column Name
+     - Column Type
+     - Column Description
+   * - filesize_type_id
+     - Integer
+     - Primary key for the file size type
+   * - filesize_type_name
+     - String(75)
+     - Full name of the file size type
+   * - filesize_type_code
+     - String(2)
+     - Code used by the file size type
+
+There are defaults provided for file sizes on initialization:
+
+.. list-table:: filesize_type_lkup defaults
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - System Key
+     - System Value
+     - System Code
+   * - 1
+     - kilobytes
+     - KB
+   * - 2
+     - megabytes
+     - MB
+   * - 3
+     - gigabytes
+     - GB
+   * - 4
+     - bytes
+     - B
 
 
 .. _location_lkup:

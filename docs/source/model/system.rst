@@ -30,7 +30,7 @@ This is the core system table, to be used in future updates.
 
 The following defaults are provided on initialization.
 
-.. list-table:: system_lkup
+.. list-table:: system_lkup defaults
    :widths: 25 25 50
    :header-rows: 1
 

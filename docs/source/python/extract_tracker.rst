@@ -60,7 +60,14 @@ Those variables will be used to populate the data store backend as explained in 
    * - compression_type
      - The type of compression used on the extract.  Optional.
      - :ref:`extract_compression_type_lkup`
-
+   * - extract_id
+     - When recreating the ExtractTracker instance, provide the extract_id and the instance will be re-instantiated
+     - :ref:`extract_tracking`
+     - No
+   * - file_size
+     - The size of the file
+     - :ref:`extract_tracking`
+     - Yes
 
 Changing Extract Status
 ***********************
@@ -71,6 +78,52 @@ As extract files are used within a process run, their status will need to be mod
 
 Custom extract status can be entered, but the default status types must be used for ProcessTracker to know what to do
 with files.  As long as the file's status is eventually changed to one of those then the process flow will continue.
+
+
+Extract Dependencies
+********************
+
+Extracts can have dependencies between each other, just like processes.  To add dependencies as part of the data
+pipeline, use the add_dependency function.::
+
+        extract.add_dependency(dependency_type='parent', dependency=parent_extract)
+
+Child dependencies can also be registered.::
+
+        extract.add_dependency(dependency_type='child', dependency=child_extract)
+
+Extract Audit Information
+*************************
+
+Audit information can be collected on individual extracts.
+
+Setting Extract Data's Low and High Dates
+-----------------------------------------
+
+If an extract has a date field, it can be used to store the extract file's lowest and highest datetimes.::
+
+        extract.set_extract_low_high_dates(low_date="1900-01-01 00:00:00", high_date="2019-12-31 00:00:00")
+
+Dates can be refreshed as the data is processed, or the low and high dates can be predetermined and passed to
+ExtractTracker before finishing the processing of the file by changing it's status.
+
+Two types of dates are tracked:  dates on write and dates on load.  set_extract_low_high_dates has a default type of
+'load'.  To change it, just set audit_type.::
+
+        extract.set_extract_low_high_dates(low_date="1900-01-01 00:00:00", high_date="2019-12-31 00:00:00", audit_type='write')
+
+Setting Extract Record Count
+----------------------------
+
+If tracking number of records is required, set_extract_record_count will keep the status of the number of records per
+file, once it is provided the record count.::
+
+        extract.set_extract_record_count(num_records=792)
+
+As with low and high dates, two types of counts are tracked:  write and load.  set_extract_record_count has a default
+type of 'load'.  To change it, just set audit_type.::
+
+        extract.set_extract_record_count(num_records=792, audit_type='write')
 
 Extract Helpers
 ***************
@@ -92,3 +145,4 @@ The extract's location object can be retrieved by using:::
 Attributes of the location can be called by using the attribute's name:::
 
         extract.location.location_bucket_name # To retrieve the location's bucket (if s3 location)
+

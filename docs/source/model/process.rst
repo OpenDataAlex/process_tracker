@@ -38,6 +38,12 @@ This table tracks the unique processes being tracked by ProcessTracker.
    * - schedule_frequency_id
      - Integer
      - The schedule frequency of the process.  Foreign key to :ref:`schedule_frequency_lkup`
+   * - last_completed_run_date_time
+     - Datetime/timestamp
+     - The date/time of the last successful completion of this process
+   * - last_errored_run_date_time
+     - Datetime/timestamp
+     - The date/time of the last errored run of this process
 
 
 .. _process_contact:
@@ -376,6 +382,9 @@ This table is the core of the process tracking subsystem.
    * - is_latest_run
      - Boolean
      - Bit to determine if for the given process if the record is the latest run or not.
+   * - process_run_name
+     - String(250)
+     - Unique process instance name, optional.
 
 
 .. _process_type_lkup:
