@@ -99,7 +99,7 @@ This table tracks the valid types of files and their formats that available.
      - Integer
      - Auto incrementing unique sequence
    * - extract_filetype_code
-     - String(5)
+     - String(25)
      - The file extension used by the filetype (i.e. csv)
    * - extract_filetype
      - String(75)

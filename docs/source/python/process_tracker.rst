@@ -43,7 +43,7 @@ Those variables will be used to populate the data store backend as explained in 
      - :ref:`process_tracking`
      - Yes
    * - process_type
-     - The type of process being run.
+     - The type of process being run. Optional if process already exists.
      - :ref:`process_type_lkup`
      - Yes
    * - actor_name
@@ -93,7 +93,7 @@ Those variables will be used to populate the data store backend as explained in 
      - The general frequency at which the process should run.
      - :ref:`schedule_frequency_lkup`
      - No
-   * - process_run_id
+   * - process_tracking_id
      - When recreating a Process Tracking instance, provide the process_tracking_id and it will re-instantiate as it was
        originally created, with the current status, objects, etc.
      - :ref:`process_tracking`, plus all other objects created on instantiation of ProcessTracker
@@ -107,7 +107,7 @@ Re-initializing An Instance
 To set up a previous instance, pass the process tracking id to ProcessTracker.  Instead of creating a new instance of
 the given process, it will retrieve the specific tracking record and all of it's ancillary data.::
 
-        restored_process_run = ProcessTracker(process_run_id=123)
+        restored_process_run = ProcessTracker(process_tracking_id=123)
 
 This should ideally only be used when a process is still running - like when switching between services within your
 cloud provider.
@@ -518,7 +518,7 @@ Processes can have an optional schedule frequency.  To find all processes of a g
 
         process_run.find_process_by_schedule_frequency(frequency="hourly")
 
-This will return a list of process ids with the given frequency.
+This will return a list of process objects with the given frequency.
 
 Finding Process Filters
 ***********************
